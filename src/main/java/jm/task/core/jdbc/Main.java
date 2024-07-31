@@ -1,14 +1,17 @@
 package jm.task.core.jdbc;
 
 import jm.task.core.jdbc.dao.UserDao;
+import jm.task.core.jdbc.dao.UserDaoHibernateImpl;
 import jm.task.core.jdbc.dao.UserDaoJDBCImpl;
+import jm.task.core.jdbc.util.HibernateUtil;
 import jm.task.core.jdbc.util.Util;
+import org.hibernate.SessionFactory;
 
 public class Main {
     public static void main(String[] args) {
         // реализуйте алгоритм здесь
-        Util.getInstance();
-        UserDao userDao = new UserDaoJDBCImpl();
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        UserDaoHibernateImpl userDao = new UserDaoHibernateImpl(sessionFactory);
 
         userDao.createUsersTable();
         userDao.saveUser("Name1", "LastName1", (byte) 20);
