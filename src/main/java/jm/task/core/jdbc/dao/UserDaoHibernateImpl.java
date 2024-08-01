@@ -22,9 +22,9 @@ public class UserDaoHibernateImpl implements UserDao {
         String sqlCheckTable = "SHOW TABLES LIKE 'users'";
         String sqlCreateTable = "CREATE TABLE users (" +
                 "id INT AUTO_INCREMENT PRIMARY KEY," +
-                "username VARCHAR(50) NOT NULL," +
-                "email VARCHAR(100) NOT NULL UNIQUE," +
-                "password VARCHAR(255) NOT NULL," +
+                "name VARCHAR(50) NOT NULL," +
+                "lastname VARCHAR(100) NOT NULL," +
+                "age INT(255) NOT NULL," +
                 "created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP" +
                 ")";
 
@@ -44,17 +44,11 @@ public class UserDaoHibernateImpl implements UserDao {
     }
 
     private void executeSql(String sql) {
-        Transaction transaction = null;
         try (Session session = sessionFactory.openSession()) {
-            transaction = session.beginTransaction();
+            Transaction transaction = session.beginTransaction();
             session.createSQLQuery(sql).executeUpdate();
-            if (transaction.getStatus() == TransactionStatus.ACTIVE) {
-                transaction.commit();
-            }
+            transaction.commit();
         } catch (Exception e) {
-            if (transaction != null && transaction.getStatus() == TransactionStatus.ACTIVE) {
-                transaction.rollback();
-            }
             e.printStackTrace();
         }
     }
@@ -67,7 +61,7 @@ public class UserDaoHibernateImpl implements UserDao {
 
     @Override
     public void saveUser(String name, String lastName, byte age) {
-        String sql = "INSERT INTO users (username, email, password) VALUES (:name, :lastName, :age)";
+        String sql = "INSERT INTO users (name, lastname, age) VALUES (:name, :lastName, :age)";
         try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();
             session.createSQLQuery(sql)
