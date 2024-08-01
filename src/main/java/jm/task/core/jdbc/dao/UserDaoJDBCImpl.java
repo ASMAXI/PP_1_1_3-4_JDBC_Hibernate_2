@@ -38,7 +38,7 @@ public class UserDaoJDBCImpl implements UserDao {
     @Override
     public List<User> getAllUsers() {
 
-        return null; // Возвращаем пустой список, если записей нет
+        return null;
     }
 
     @Override
@@ -46,7 +46,4 @@ public class UserDaoJDBCImpl implements UserDao {
 
     }
 
-    private void executeSql(String sql) {
-
-    }
 }
