@@ -12,7 +12,7 @@ import java.util.List;
 
 public class UserServiceImpl implements UserService {
     SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-    UserDao userDao = new UserDaoHibernateImpl(sessionFactory);
+   private final UserDao userDao = new UserDaoHibernateImpl(sessionFactory);
 
     @Override
     public void createUsersTable() {
